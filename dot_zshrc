@@ -1,0 +1,37 @@
+# Set PATH
+
+# $PATH="~/.bin:${PATH}"
+
+#If homebrew is installed, load its completions
+
+if [[ -r /home/linuxbrew/ ]]
+then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if type brew &>/dev/null
+then
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
+# Download Znap, if it's not there yet.
+[[ -r ~/repos/znap/znap.zsh ]] ||
+    git clone --depth 1 -- \
+        https://github.com/marlonrichert/zsh-snap.git ~/repos/znap
+source ~/repos/znap/znap.zsh  # Start Znap
+
+# Run WSL2 SSH Agent bridge
+
+if [[ -n $WSL_DISTRO_NAME ]]
+then
+    eval "$(~/.bin/wsl2-ssh-agent)"
+fi
+
+znap prompt sindresorhus/pure
+
+# `znap install` adds new commands and completions.
+znap install zsh-users/zsh-completions
+
+# `znap source` starts plugins.
+znap source marlonrichert/zsh-autocomplete
+
