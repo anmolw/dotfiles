@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Set PATH
 
 # $PATH="~/.bin:${PATH}"
@@ -25,14 +32,15 @@ source ~/repos/znap/znap.zsh  # Start Znap
 if [[ -n $WSL_DISTRO_NAME ]]
 then
     eval "$(~/.bin/wsl2-ssh-agent)"
-
 # If we're running on linux, but not in WSL, use keychain to manage ssh keys
 elif [[ $OSTYPE == "linux-gnu" ]]
 then
     eval "$(keychain -q -Q --eval id_github)"
 fi
 
-znap prompt sindresorhus/pure
+# znap prompt sindresorhus/pure
+
+znap source romkatv/powerlevel10k
 
 # `znap install` adds new commands and completions.
 znap install zsh-users/zsh-completions
@@ -40,3 +48,5 @@ znap install zsh-users/zsh-completions
 # `znap source` starts plugins.
 znap source marlonrichert/zsh-autocomplete
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
