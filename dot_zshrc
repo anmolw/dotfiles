@@ -40,6 +40,9 @@ fi
 
 # znap prompt sindresorhus/pure
 
+# zoxide integation
+znap eval zoxide 'zoxide init zsh'
+
 znap source romkatv/powerlevel10k
 
 # `znap install` adds new commands and completions.
