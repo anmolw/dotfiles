@@ -47,6 +47,7 @@ znap source romkatv/powerlevel10k
 
 # `znap install` adds new commands and completions.
 znap install zsh-users/zsh-completions
+znap source zsh-users/zsh-syntax-highlighting
 
 # `znap source` starts plugins.
 znap source marlonrichert/zsh-autocomplete
