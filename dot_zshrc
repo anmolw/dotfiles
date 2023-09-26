@@ -32,8 +32,8 @@ source ~/repos/znap/znap.zsh  # Start Znap
 if [[ -n $WSL_DISTRO_NAME ]]
 then
     eval "$(~/.bin/wsl2-ssh-agent)"
-# If we're running on linux, but not in WSL, use keychain to manage ssh keys
-elif [[ $OSTYPE == "linux-gnu" ]]
+# If we're running on linux, but not in WSL or an SSH session with forwarding enabled, use keychain to manage ssh keys
+elif [[ -z $SSH_AUTH_SOCK && $OSTYPE == "linux-gnu" ]]
 then
     eval "$(keychain -q -Q --eval id_github)"
 fi
@@ -41,7 +41,9 @@ fi
 # znap prompt sindresorhus/pure
 
 # zoxide integation
-znap eval zoxide 'zoxide init zsh'
+if [[ ! -z $(which zoxide) ]]; then
+    znap eval zoxide 'zoxide init zsh'
+fi
 
 znap source romkatv/powerlevel10k
 
