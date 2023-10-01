@@ -31,7 +31,7 @@ source ~/repos/znap/znap.zsh  # Start Znap
 
 if [[ -n $WSL_DISTRO_NAME ]]
 then
-    eval "$(~/.bin/wsl2-ssh-agent)"
+    eval "$(~/.local/bin/wsl2-ssh-agent)"
 # If we're running on linux, but not in WSL or an SSH session with forwarding enabled, use keychain to manage ssh keys
 elif [[ -z $SSH_AUTH_SOCK && $OSTYPE == "linux-gnu" ]]
 then
