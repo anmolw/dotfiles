@@ -21,6 +21,12 @@ then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
+
 # Download Znap, if it's not there yet.
 [[ -r ~/repos/znap/znap.zsh ]] ||
     git clone --depth 1 -- \
@@ -33,9 +39,9 @@ if [[ -n $WSL_DISTRO_NAME ]]
 then
     eval "$(~/.local/bin/wsl2-ssh-agent)"
 # If we're running on linux, but not in WSL or an SSH session with forwarding enabled, use keychain to manage ssh keys
-elif [[ -z $SSH_AUTH_SOCK && $OSTYPE == "linux-gnu" ]]
-then
-    eval "$(keychain -q -Q --eval id_github)"
+# elif [[ -z $SSH_AUTH_SOCK && $OSTYPE == "linux-gnu" ]]
+# then
+#     eval "$(keychain -q -Q --eval id_github)"
 fi
 
 # znap prompt sindresorhus/pure
