@@ -48,7 +48,7 @@ fi
 
 # zoxide integation
 if [[ ! -z $(which zoxide) ]]; then
-    znap eval zoxide 'zoxide init zsh'
+    eval "$(zoxide init zsh)"
 fi
 
 znap source romkatv/powerlevel10k
