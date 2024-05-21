@@ -5,20 +5,27 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Function for detecting if an executable is in path
+# Taken from https://stackoverflow.com/a/53798785
+
+function is_bin_in_path {
+  builtin whence -p "$1" &> /dev/null
+}
+
 # Set PATH
 
 PATH="${HOME}/.local/bin:${PATH}"
 
-#If homebrew is installed, load its completions
+#If homebrew is installed, initialize it and load its completions
 
 if [[ -r /home/linuxbrew/ ]]
 then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 if type brew &>/dev/null
 then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
 # Nix
@@ -27,17 +34,38 @@ if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
 fi
 # End Nix
 
+# Add pixi to path and enable autocompletion if it's installed
+
+if [[ -r "${HOME}/.pixi/" ]]
+then
+  PATH="${HOME}/.pixi/bin:${PATH}"
+  eval "$(pixi completion --shell zsh)"
+fi
+
+# Add cargo's bin directory to path if it's installed
+
+if [[ -r "${HOME}/.cargo/bin" ]]
+then
+  PATH="${HOME}/.cargo/bin:${PATH}"
+  . "$HOME/.cargo/env"
+fi
+
+# zoxide integation
+if is_bin_in_path zoxide; then
+  eval "$(zoxide init zsh)"
+fi
+
 # Download Znap, if it's not there yet.
 [[ -r ~/repos/znap/znap.zsh ]] ||
-    git clone --depth 1 -- \
-        https://github.com/marlonrichert/zsh-snap.git ~/repos/znap
+  git clone --depth 1 -- \
+      https://github.com/marlonrichert/zsh-snap.git ~/repos/znap
 source ~/repos/znap/znap.zsh  # Start Znap
 
 # Run WSL2 SSH Agent bridge
 
 if [[ -n $WSL_DISTRO_NAME ]]
 then
-    eval "$(~/.local/bin/wsl2-ssh-agent)"
+  eval "$(~/.local/bin/wsl2-ssh-agent)"
 # If we're running on linux, but not in WSL or an SSH session with forwarding enabled, use keychain to manage ssh keys
 # elif [[ -z $SSH_AUTH_SOCK && $OSTYPE == "linux-gnu" ]]
 # then
@@ -46,15 +74,11 @@ fi
 
 # znap prompt sindresorhus/pure
 
-# zoxide integation
-if [[ ! -z $(which zoxide) ]]; then
-    eval "$(zoxide init zsh)"
-fi
-
 znap source romkatv/powerlevel10k
 
 # `znap install` adds new commands and completions.
 znap install zsh-users/zsh-completions
+znap install nix-community/nix-zsh-completions
 znap source zsh-users/zsh-syntax-highlighting
 
 # `znap source` starts plugins.
@@ -62,3 +86,7 @@ znap source marlonrichert/zsh-autocomplete
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+eval "$(atuin init zsh)"
+
+eval "$(direnv hook zsh)"
