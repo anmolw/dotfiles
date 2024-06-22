@@ -1,3 +1,5 @@
 {
-    "scrollbar": true
+    "mkparents": true,
+    "scrollbar": true,
+    "tabsize": 2
 }
