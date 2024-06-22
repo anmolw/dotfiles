@@ -31,11 +31,11 @@ fi
 # Nix
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+  fpath=(${HOME}/.nix-profile/share/zsh/site-functions $fpath)
 fi
 # End Nix
 
 # Add pixi to path and enable autocompletion if it's installed
-
 if [[ -r "${HOME}/.pixi/" ]]
 then
   PATH="${HOME}/.pixi/bin:${PATH}"
@@ -43,11 +43,9 @@ then
 fi
 
 # Add cargo's bin directory to path if it's installed
-
 if [[ -r "${HOME}/.cargo/bin" ]]
 then
   PATH="${HOME}/.cargo/bin:${PATH}"
-  . "$HOME/.cargo/env"
 fi
 
 # zoxide integation
@@ -86,6 +84,8 @@ znap source marlonrichert/zsh-autocomplete
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+. "$HOME/.cargo/env"
 
 eval "$(atuin init zsh)"
 
