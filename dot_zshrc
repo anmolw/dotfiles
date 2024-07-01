@@ -16,9 +16,34 @@ function is_bin_in_path {
 
 PATH="${HOME}/.local/bin:${PATH}"
 
+# Download Znap, if it's not there yet.
+[[ -r ~/repos/znap/znap.zsh ]] ||
+  git clone --depth 1 -- \
+      https://github.com/marlonrichert/zsh-snap.git ~/repos/znap
+source ~/repos/znap/znap.zsh  # Start Znap
+
+# znap prompt sindresorhus/pure
+
+# `znap source` starts plugins.
+znap source marlonrichert/zsh-autocomplete
+znap source romkatv/powerlevel10k
+znap source zsh-users/zsh-syntax-highlighting
+
+# zsh-autocomplete settings
+
+# https://github.com/marlonrichert/zsh-autocomplete?tab=readme-ov-file#make-tab-and-shifttab-cycle-completions-on-the-command-line
+bindkey '^I' menu-complete
+# https://github.com/marlonrichert/zsh-autocomplete?tab=readme-ov-file#insert-prefix-instead-of-substring
+bindkey "$terminfo[kcbt]" reverse-menu-complete
+zstyle ':completion:*:*' matcher-list 'm:{[:lower:]-}={[:upper:]_}' '+r:|[.]=**'
+
+# `znap install` adds new commands and completions.
+znap install zsh-users/zsh-completions
+znap install nix-community/nix-zsh-completions
+
 #If homebrew is installed, initialize it and load its completions
 
-if [[ -r /home/linuxbrew/ ]]
+if [[ -r /home/linuxbrew/.linuxbrew/bin/brew ]]
 then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
@@ -36,6 +61,7 @@ fi
 # End Nix
 
 # Add pixi to path and enable autocompletion if it's installed
+
 if [[ -r "${HOME}/.pixi/" ]]
 then
   PATH="${HOME}/.pixi/bin:${PATH}"
@@ -43,21 +69,17 @@ then
 fi
 
 # Add cargo's bin directory to path if it's installed
+
 if [[ -r "${HOME}/.cargo/bin" ]]
 then
   PATH="${HOME}/.cargo/bin:${PATH}"
+  . "$HOME/.cargo/env"
 fi
 
 # zoxide integation
 if is_bin_in_path zoxide; then
   eval "$(zoxide init zsh)"
 fi
-
-# Download Znap, if it's not there yet.
-[[ -r ~/repos/znap/znap.zsh ]] ||
-  git clone --depth 1 -- \
-      https://github.com/marlonrichert/zsh-snap.git ~/repos/znap
-source ~/repos/znap/znap.zsh  # Start Znap
 
 # Run WSL2 SSH Agent bridge
 
@@ -68,25 +90,17 @@ then
 # elif [[ -z $SSH_AUTH_SOCK && $OSTYPE == "linux-gnu" ]]
 # then
 #     eval "$(keychain -q -Q --eval id_github)"
+else
+	export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
 fi
 
-# znap prompt sindresorhus/pure
+if is_bin_in_path direnv; then
+	eval "$(direnv hook zsh)"
+fi
 
-znap source romkatv/powerlevel10k
-
-# `znap install` adds new commands and completions.
-znap install zsh-users/zsh-completions
-znap install nix-community/nix-zsh-completions
-znap source zsh-users/zsh-syntax-highlighting
-
-# `znap source` starts plugins.
-znap source marlonrichert/zsh-autocomplete
+if is_bin_in_path atuin; then
+	eval "$(atuin init zsh)"
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-. "$HOME/.cargo/env"
-
-eval "$(atuin init zsh)"
-
-eval "$(direnv hook zsh)"
