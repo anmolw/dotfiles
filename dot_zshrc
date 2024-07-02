@@ -25,9 +25,9 @@ source ~/repos/znap/znap.zsh  # Start Znap
 # znap prompt sindresorhus/pure
 
 # `znap source` starts plugins.
+znap source zsh-users/zsh-syntax-highlighting
 znap source marlonrichert/zsh-autocomplete
 znap source romkatv/powerlevel10k
-znap source zsh-users/zsh-syntax-highlighting
 
 # zsh-autocomplete settings
 
