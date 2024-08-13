@@ -16,41 +16,44 @@ function is_bin_in_path {
 
 PATH="${HOME}/.local/bin:${PATH}"
 
-# Download Znap, if it's not there yet.
-[[ -r ~/repos/znap/znap.zsh ]] ||
-  git clone --depth 1 -- \
-      https://github.com/marlonrichert/zsh-snap.git ~/repos/znap
-source ~/repos/znap/znap.zsh  # Start Znap
+ZIM_CONFIG_FILE=${ZDOTDIR}/.zimrc
+ZIM_HOME=$HOME/.cache/zim
 
-# znap prompt sindresorhus/pure
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
 
-# `znap source` starts plugins.
-znap source zsh-users/zsh-syntax-highlighting
-# znap source marlonrichert/zsh-autocomplete
-znap source zsh-users/zsh-autosuggestions
-znap source romkatv/powerlevel10k
+# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
 
 # zsh-autocomplete settings
-
 ## https://github.com/marlonrichert/zsh-autocomplete?tab=readme-ov-file#make-tab-and-shifttab-cycle-completions-on-the-command-line
 #bindkey '^I' menu-complete
 ## https://github.com/marlonrichert/zsh-autocomplete?tab=readme-ov-file#insert-prefix-instead-of-substring
 #bindkey "$terminfo[kcbt]" reverse-menu-complete
 #zstyle ':completion:*:*' matcher-list 'm:{[:lower:]-}={[:upper:]_}' '+r:|[.]=**'
 
-# `znap install` adds new commands and completions.
-znap install zsh-users/zsh-completions
-znap install nix-community/nix-zsh-completions
+
+# eza aliases
+if is_bin_in_path eza; then
+  alias ls="eza -al --color=always --group-directories-first --icons"
+  alias la="eza -a --color=always --group-directories-first --icons"
+fi
 
 #If homebrew is installed, initialize it and load its completions
-
 if [[ -r /home/linuxbrew/.linuxbrew/bin/brew ]]
 then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
-if type brew &>/dev/null
-then
+if is_bin_in_path brew; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
@@ -62,7 +65,6 @@ fi
 # End Nix
 
 # Add pixi to path and enable autocompletion if it's installed
-
 if [[ -r "${HOME}/.pixi/" ]]
 then
   PATH="${HOME}/.pixi/bin:${PATH}"
@@ -70,7 +72,6 @@ then
 fi
 
 # Add cargo's bin directory to path if it's installed
-
 if [[ -r "${HOME}/.cargo/bin" ]]
 then
   PATH="${HOME}/.cargo/bin:${PATH}"
@@ -83,7 +84,6 @@ if is_bin_in_path zoxide; then
 fi
 
 # Run WSL2 SSH Agent bridge
-
 if [[ -n $WSL_DISTRO_NAME ]]
 then
   eval "$(~/.local/bin/wsl2-ssh-agent)"
