@@ -40,7 +40,6 @@ source ${ZIM_HOME}/init.zsh
 #bindkey "$terminfo[kcbt]" reverse-menu-complete
 #zstyle ':completion:*:*' matcher-list 'm:{[:lower:]-}={[:upper:]_}' '+r:|[.]=**'
 
-
 # eza aliases
 if is_bin_in_path eza; then
   alias ls="eza -al --color=always --group-directories-first --icons"
@@ -51,9 +50,6 @@ fi
 if [[ -r /home/linuxbrew/.linuxbrew/bin/brew ]]
 then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
-if is_bin_in_path brew; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
@@ -87,10 +83,6 @@ fi
 if [[ -n $WSL_DISTRO_NAME ]]
 then
   eval "$(~/.local/bin/wsl2-ssh-agent)"
-# If we're running on linux, but not in WSL or an SSH session with forwarding enabled, use keychain to manage ssh keys
-# elif [[ -z $SSH_AUTH_SOCK && $OSTYPE == "linux-gnu" ]]
-# then
-#     eval "$(keychain -q -Q --eval id_github)"
 elif [[ ! -n $SSH_AUTH_SOCK ]]
 then
 	export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
