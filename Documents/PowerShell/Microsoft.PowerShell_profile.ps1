@@ -1,24 +1,9 @@
-# Load powerline-go prompt
-# See https://github.com/justjanne/powerline-go for customization info
-# function global:prompt {
-#     $pwd = $ExecutionContext.SessionState.Path.CurrentLocation
-#     $startInfo = New-Object System.Diagnostics.ProcessStartInfo
-#     $startInfo.FileName = "powerline-go"
-#     $startInfo.Arguments = "-shell bare -modules 'venv,host,ssh,cwd,perms,git,hg,jobs,exit,root' -trim-ad-domain -newline -hostname-only-if-ssh"
-#     $startInfo.Environment["TERM"] = "xterm-256color"
-#     $startInfo.CreateNoWindow = $true
-#     $startInfo.StandardOutputEncoding = [System.Text.Encoding]::UTF8
-#     $startInfo.RedirectStandardOutput = $true
-#     $startInfo.UseShellExecute = $false
-#     $startInfo.WorkingDirectory = $pwd
-#     $process = New-Object System.Diagnostics.Process
-#     $process.StartInfo = $startInfo
-#     $process.Start() | Out-Null
-#     $standardOut = $process.StandardOutput.ReadToEnd()
-#     $process.WaitForExit()
-#     $standardOut
-# }
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\powerlevel10k_lean.omp.json" | Invoke-Expression
+
+#f45873b3-b655-43a6-b217-97c00aa0db58 PowerToys CommandNotFound module
+
+Import-Module -Name Microsoft.WinGet.CommandNotFound
+#f45873b3-b655-43a6-b217-97c00aa0db58
+
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
 # Be aware that if you are missing these lines from your profile, tab completion
@@ -29,6 +14,9 @@ if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 
+# VS Code terminal integration
+if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
+
 Import-Module gsudoModule
 
 Invoke-Expression (&sfsu hook)
@@ -38,5 +26,10 @@ Import-Module scoop-completion
 
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
-# Alias docker to podman for convenience
-Set-Alias -Name docker -Value podman
+# Prompt
+
+# Alternatives
+# https://github.com/justjanne/powerline-go
+# oh-my-posh init pwsh --config "~\Documents\Powershell\powerlevel10k_lean.omp.json" | Invoke-Expression
+
+Invoke-Expression (&starship init powershell)
