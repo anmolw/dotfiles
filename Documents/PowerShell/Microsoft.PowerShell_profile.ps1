@@ -24,7 +24,6 @@ Invoke-Expression (&sfsu hook)
 (& volta completions powershell) | Out-String | Invoke-Expression
 Import-Module scoop-completion
 
-Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 # Prompt
 
@@ -33,3 +32,4 @@ Invoke-Expression (& { (zoxide init powershell | Out-String) })
 # oh-my-posh init pwsh --config "~\Documents\Powershell\powerlevel10k_lean.omp.json" | Invoke-Expression
 
 Invoke-Expression (&starship init powershell)
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
