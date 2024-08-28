@@ -1,5 +1,6 @@
 {
     "mkparents": true,
     "scrollbar": true,
+    "tabstospaces": true,
     "tabsize": 2
 }
