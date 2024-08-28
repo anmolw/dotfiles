@@ -17,10 +17,21 @@ if wezterm.target_triple == 'x86_64-unknown-linux-gnu' then
 -- Windows-specific configuration
 elseif wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   config.default_prog = { 'pwsh' }
+  local wsl_domains = wezterm.default_wsl_domains()
+  for idx, dom in ipairs(wsl_domains) do
+    if dom.name == 'WSL:Ubuntu-24.04' then
+      dom.default_prog = { '/home/anmol/.nix-profile/bin/fish' }
+    end
+  end
+  config.wsl_domains = wsl_domains
 end
 
 config.color_scheme = 'Catppuccin Mocha'
-config.font = wezterm.font 'Hack Nerd Font Mono'
+config.font = wezterm.font_with_fallback {
+        {family='Fira Code'},
+        {family='Iosevka Term', weight='Regular', stretch='Expanded', italic=false},
+        {family='Hack'},
+}
 
 -- No ligatures
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
