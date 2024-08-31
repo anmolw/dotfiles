@@ -71,6 +71,10 @@ fi
 if [[ -r "${HOME}/.cargo/bin" ]]
 then
   PATH="${HOME}/.cargo/bin:${PATH}"
+fi
+
+if [[ -r "${HOME}/.cargo/env" ]]
+then
   . "$HOME/.cargo/env"
 fi
 
