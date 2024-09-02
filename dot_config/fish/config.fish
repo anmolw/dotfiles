@@ -19,6 +19,12 @@ if status --is-interactive
   end
 end
 
+if command -q bat
+  # Format man pages
+  set -x MANROFFOPT "-c"
+  set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
+end
+
 if command -q mise
   mise activate fish | source
 end
