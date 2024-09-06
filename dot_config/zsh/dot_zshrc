@@ -97,7 +97,7 @@ if is_bin_in_path direnv; then
 fi
 
 if is_bin_in_path mise; then
-  eval "$(mise init zsh)"
+  eval "$(mise activate zsh)"
 fi
 
 if is_bin_in_path atuin; then
