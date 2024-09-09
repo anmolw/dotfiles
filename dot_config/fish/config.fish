@@ -75,6 +75,10 @@ if command -q eza
   alias lt "eza --tree --icons --git --group-directories-first"
 end
 
+if command -q erd
+  alias erd "erd -H -y inverted --icons"
+end
+
 # Colorize grep output
 alias grep "grep --color=auto"
 alias fgrep "fgrep --color=auto"
