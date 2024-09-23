@@ -10,6 +10,10 @@ end
 set fish_greeting
 
 if status --is-interactive
+  if command -q fzf
+    fzf --fish | source
+  end
+  
   if command -q atuin
     atuin init fish | source
   end
@@ -17,12 +21,12 @@ if status --is-interactive
   if command -q zoxide
     zoxide init fish | source
   end
-end
 
-if command -q bat
-  # Format man pages
-  set -x MANROFFOPT "-c"
-  set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
+  if command -q bat
+    # Format man pages
+    set -x MANROFFOPT "-c"
+    set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
+  end
 end
 
 if command -q mise
@@ -75,9 +79,7 @@ if command -q eza
   alias lt "eza --tree --icons --git --group-directories-first"
 end
 
-if command -q erd
-  alias erd "erd -H -y inverted --icons"
-end
+alias erd "erd -H -y inverted --icons"
 
 # Colorize grep output
 alias grep "grep --color=auto"
