@@ -83,17 +83,22 @@ if is_bin_in_path zoxide; then
   eval "$(zoxide init zsh)"
 fi
 
+# fzf integration
+if is_bin_in_path fzf; then
+	source <(fzf --zsh)
+fi
+
 # Run WSL2 SSH Agent bridge
 if [[ -n $WSL_DISTRO_NAME ]]
 then
   eval "$(~/.local/bin/wsl2-ssh-agent)"
 elif [[ ! -n $SSH_AUTH_SOCK ]]
 then
-	export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
+  export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
 fi
 
 if is_bin_in_path direnv; then
-	eval "$(direnv hook zsh)"
+  eval "$(direnv hook zsh)"
 fi
 
 if is_bin_in_path mise; then
@@ -101,7 +106,7 @@ if is_bin_in_path mise; then
 fi
 
 if is_bin_in_path atuin; then
-	eval "$(atuin init zsh)"
+  eval "$(atuin init zsh)"
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
