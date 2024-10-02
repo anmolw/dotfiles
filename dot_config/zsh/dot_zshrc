@@ -1,3 +1,9 @@
+if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+  autoload -Uz -- "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
+  ghostty-integration
+  unfunction ghostty-integration
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
