@@ -1,1 +1,9 @@
 skip_global_compinit=1
+
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+    . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+    fpath=(${HOME}/.nix-profile/share/zsh/site-functions $fpath)
+fi
+# End Nix
+

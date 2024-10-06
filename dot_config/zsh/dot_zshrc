@@ -59,13 +59,6 @@ then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
-# Nix
-if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-  fpath=(${HOME}/.nix-profile/share/zsh/site-functions $fpath)
-fi
-# End Nix
-
 # Add pixi to path and enable autocompletion if it's installed
 if [[ -r "${HOME}/.pixi/" ]]
 then
