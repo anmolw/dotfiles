@@ -6,18 +6,18 @@ font-feature = -calt
 font-feature = -clig
 font-feature = -dlig
 font-size = 12
+adjust-underline-position = 1
 
 # Appearance
 theme = catppuccin-mocha
 cursor-style = block
 cursor-style-blink = false
-shell-integration-features = no-cursor,sudo
 
 # Window settings
 window-height = 40
 window-width = 140
 window-theme = ghostty
-# window-padding-color = extend
+window-padding-balance = false
 
 # GTK
 adw-toolbar-style = raised
@@ -26,6 +26,11 @@ gtk-titlebar = true
 gtk-single-instance = true
 
 # Keybinds
+keybind = ctrl+alt+h=goto_split:left
+keybind = ctrl+alt+l=goto_split:right
+keybind = ctrl+alt+k=goto_split:top
+keybind = ctrl+alt+j=goto_split:bottom
 
 # Misc
+shell-integration-features = no-cursor,sudo
 focus-follows-mouse = true
