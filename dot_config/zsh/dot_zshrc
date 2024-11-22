@@ -50,6 +50,7 @@ source ${ZIM_HOME}/init.zsh
 if is_bin_in_path eza; then
   alias ls="eza -al --color=always --group-directories-first --icons"
   alias la="eza -a --color=always --group-directories-first --icons"
+  alias lt="eza --color=always --group-directories-first --icons --tree"
 fi
 
 #If homebrew is installed, initialize it and load its completions
@@ -84,7 +85,7 @@ fi
 
 # fzf integration
 if is_bin_in_path fzf; then
-	source <(fzf --zsh)
+  source <(fzf --zsh)
 fi
 
 # Run WSL2 SSH Agent bridge
