@@ -1,12 +1,15 @@
 command = fish
 
 # Font settings
-font-family = Fira Code
+font-family = JetBrains Mono
+font-style = Regular
 font-feature = -calt
+font-feature = zero
 font-feature = -clig
 font-feature = -dlig
 font-size = 12
 adjust-underline-position = 1
+# freetype-load-flags = no-autohint
 
 # Appearance
 theme = catppuccin-mocha
@@ -17,7 +20,7 @@ cursor-style-blink = false
 window-height = 40
 window-width = 140
 window-theme = ghostty
-window-padding-balance = false
+# window-padding-balance = true
 
 # GTK
 adw-toolbar-style = raised
@@ -33,4 +36,5 @@ keybind = ctrl+alt+j=goto_split:bottom
 
 # Misc
 shell-integration-features = no-cursor,sudo
+mouse-scroll-multiplier = 2
 focus-follows-mouse = true
