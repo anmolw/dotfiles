@@ -80,6 +80,7 @@ if command -q eza
     alias ls "eza -l --icons --git --group-directories-first"
     alias la "eza -la --icons --git --group-directories-first"
     alias lt "eza --tree --icons --git --group-directories-first"
+    alias lla "eza -lah --icons --git --group-directories-first"
 end
 
 abbr -a -- erd "erd -H -y inverted --icons"
