@@ -4,7 +4,7 @@ function nixchk --description "Check when a nixpkgs branch was last updated"
         return
     end
     set res (curl -fsS "https://api.github.com/repos/nixos/nixpkgs/branches/$argv[1]")
-    if test $status -eq 1
+    if test $status -ne 0
         echo "Failed to fetch info from the github API"
         return 1
     end
