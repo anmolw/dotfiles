@@ -9,16 +9,12 @@ function lights --description 'Control smart lights'
         return 1
     end
 
+    set action toggle
     switch $argv[1]
         case on
             set action turn_on
         case off
             set action turn_off
-        case toggle ''
-            set action toggle
-        case '*'
-            echo "Usage: lights [on|off|toggle]"
-            return
     end
 
     set resp (curl -fsSX POST "$HASS_URL/api/services/light/$action" \
@@ -26,7 +22,7 @@ function lights --description 'Control smart lights'
         --header "Content-Type: application/json" \
         --data '{"entity_id": ["light.door", "light.window"]}')
 
-    if test $status -eq 1
+    if test $status -ne 0
         echo "An error occurred while performing the request"
         return 1
     end
