@@ -17,7 +17,7 @@ sign-on-push = true
 [signing]
 backend = "ssh"
 key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINhjKonstq1xifZcoYcPkaqZmD6hOLMRdzq7xfhFrPLm"
-sign-all = true
+behavior = "drop"
 
 [merge-tools.delta]
 diff-expected-exit-codes = [0, 1]
