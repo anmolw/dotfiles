@@ -38,6 +38,10 @@ if status --is-interactive
     if command -q mise
         mise activate fish | source
     end
+
+    if command -q direnv
+        direnv hook fish | source
+    end
 else
     # Non-interactive setup
     mise activate --shims
