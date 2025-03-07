@@ -1,0 +1,22 @@
+[alias]
+  unstage = "restore --staged"
+
+[delta]
+  side-by-side = true
+
+[commit]
+  gpgsign = true
+
+[tag]
+  gpgsign = true
+
+[gpg]
+  format = "ssh"
+
+[user]
+  email = "4815989+anmolw@users.noreply.github.com"
+  name = "anmolw"
+  signingkey = "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINhjKonstq1xifZcoYcPkaqZmD6hOLMRdzq7xfhFrPLm"
+
+[init]
+  defaultBranch = "main"
