@@ -12,7 +12,7 @@ function nixchk --description "Check when a nixpkgs branch was last updated"
     if test $status -eq 1
         echo "Branch $argv[1] not found"
     else
-        echo "$argv[1] was last updated on $(date -d $commit_date)"
+        echo "$argv[1] was last updated on $(date -ud $commit_date)"
     end
 end
 
