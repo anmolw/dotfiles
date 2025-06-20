@@ -94,5 +94,7 @@ alias grep "grep --color=auto"
 alias fgrep "fgrep --color=auto"
 alias egrep "egrep --color=auto"
 
+alias ffmpeg "ffmpeg -hide_banner"
+
 # Exclude extraneous mounts from df
 alias dfx "df -h -x tmpfs -x overlay -x nfs -x smbfs -x cifs -x fuse.sshfs -x devtmpfs -x squashfs"
