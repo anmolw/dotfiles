@@ -19,9 +19,6 @@ backend = "ssh"
 key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINhjKonstq1xifZcoYcPkaqZmD6hOLMRdzq7xfhFrPLm"
 behavior = "drop"
 
-[merge-tools.delta]
-diff-expected-exit-codes = [0, 1]
-
 [template-aliases]
 "format_short_signature(signature)" = """   coalesce(signature.name(), name_placeholder)"""
 "format_short_commit_header(commit)" = """
@@ -44,6 +41,8 @@ separate(" ",
 [ui]
 default-command = "log"
 pager = ["delta"]
+diff-formatter = ":git"
 
-[ui.diff]
-format = "git"
+[merge-tools.delta]
+diff-args = ["$left", "$right"]
+diff-expected-exit-codes = [0, 1]
