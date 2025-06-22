@@ -44,7 +44,9 @@ if status --is-interactive
     end
 else
     # Non-interactive setup
-    mise activate --shims
+    if command -q mise
+        mise activate --shims
+    end
 end
 
 if status --is-login
