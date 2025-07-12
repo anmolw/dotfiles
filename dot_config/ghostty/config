@@ -1,31 +1,39 @@
 command = fish
 
 # Font settings
-font-family = JetBrains Mono
-font-style = Regular
-font-feature = -calt
+# font-family = Maple Mono
+# Slashed zero
 font-feature = zero
+# font-variation = wght=430
+font-feature = -calt
 font-feature = -clig
 font-feature = -dlig
 font-size = 12
+# adjust-cell-width = -1
 adjust-underline-position = 1
-# freetype-load-flags = no-autohint
+adjust-underline-thickness = -1
+# adjust-box-thickness = -1
 
 # Appearance
 theme = catppuccin-mocha
 cursor-style = block
+# cursor-text = #000000
 cursor-style-blink = false
+# minimum-contrast = 1.2
+resize-overlay-position = bottom-right
 
 # Window settings
 window-height = 40
 window-width = 140
 window-theme = ghostty
+window-padding-color = extend
 # window-padding-balance = true
 
 # GTK
-adw-toolbar-style = raised
+gtk-toolbar-style = raised
 gtk-tabs-location = top
 gtk-titlebar = true
+# window-decoration = client
 gtk-single-instance = true
 
 # Keybinds
@@ -33,6 +41,7 @@ keybind = ctrl+alt+h=goto_split:left
 keybind = ctrl+alt+l=goto_split:right
 keybind = ctrl+alt+k=goto_split:top
 keybind = ctrl+alt+j=goto_split:bottom
+# keybind = global:super+grave_accent=toggle_quick_terminal
 
 # Misc
 shell-integration-features = no-cursor,sudo
