@@ -17,13 +17,12 @@ if (Test-Path($ChocolateyProfile)) {
 # VS Code terminal integration
 if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
 
-Import-Module gsudoModule
-
 Invoke-Expression (&sfsu hook)
 
 (& volta completions powershell) | Out-String | Invoke-Expression
 Import-Module scoop-completion
 
+$env:YAZI_FILE_ONE = "C:\Users\anmol\scoop\apps\git\current\usr\bin\file.exe"
 
 # Prompt
 
@@ -31,5 +30,21 @@ Import-Module scoop-completion
 # https://github.com/justjanne/powerline-go
 # oh-my-posh init pwsh --config "~\Documents\Powershell\powerlevel10k_lean.omp.json" | Invoke-Expression
 
+$prompt = ""
+function Invoke-Starship-PreCommand {
+    $current_location = $executionContext.SessionState.Path.CurrentLocation
+    if ($current_location.Provider.Name -eq "FileSystem") {
+        $ansi_escape = [char]27
+        $provider_path = $current_location.ProviderPath -replace "\\", "/"
+        $prompt = "$ansi_escape]7;file://${env:COMPUTERNAME}/${provider_path}$ansi_escape\"
+    }
+    $host.ui.RawUI.WindowTitle = "$env:USERNAME@$env:COMPUTERNAME`: $pwd `a"
+    $host.ui.Write($prompt)
+}
+function Invoke-Starship-TransientFunction {
+	  &starship module character
+}
+
 Invoke-Expression (&starship init powershell)
+Enable-TransientPrompt
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
