@@ -20,3 +20,15 @@
 
 [init]
   defaultBranch = "main"
+{{- if eq .chezmoi.os "windows" }}
+
+# Windows OpenSSH, not Git's bundled copies: only these reach the agent pipe (Bitwarden)
+[core]
+  sshCommand = "C:/Windows/System32/OpenSSH/ssh.exe"
+
+[gpg "ssh"]
+  program = "C:/Windows/System32/OpenSSH/ssh-keygen.exe"
+
+[credential "helperselector"]
+  selected = "<no helper>"
+{{- end }}

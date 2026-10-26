@@ -2,7 +2,8 @@ README.md
 {{- if ne .chezmoi.os "windows" }}
 Documents
 {{- else }}
-.config
+.config/*
+!.config/git
 .tmux.conf
 .zshrc
 .zshenv
